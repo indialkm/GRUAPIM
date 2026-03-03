@@ -11,6 +11,9 @@ public class ProdutoRendaFixa extends Produto {
 		this.periodoCarencia = periodoCarencia;
 	}
 
+	
+
+
 	public double getRedimentomensalFixo() {
 		return redimentomensalFixo;
 	}

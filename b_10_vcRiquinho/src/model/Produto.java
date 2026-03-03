@@ -9,6 +9,12 @@ public abstract class Produto {
 		this.nome = nome;
 		this.descricao = descricao;
 	}
+	
+	public Produto(Produto prod) {
+		this.setNome(prod.nome);
+		this.setDescricao(prod.descricao);
+	}
+
 	public String getNome() {
 		return nome;
 	}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Cliente;
 import model.Conta;
+import model.ContaInvestimentoAutomatico;
 
 public class ContaRepository {
 
@@ -35,6 +36,18 @@ public class ContaRepository {
             }
         }
         return null;
+    }
+   
+    public Conta buscarPorDocumentoContaInvestimento(String documentoCliente) {
+    	
+    	List<Conta> contas = this.listarPorCliente(documentoCliente);
+    	
+    	return contas.stream()
+                .filter(item -> item instanceof ContaInvestimentoAutomatico)
+                .findFirst()
+                .orElse(null);
+    	
+    	
     }
 
     public boolean remover(String documentoCliente, String numeroConta) {

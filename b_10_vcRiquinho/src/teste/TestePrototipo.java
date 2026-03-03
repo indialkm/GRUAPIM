@@ -6,6 +6,7 @@ import controller.ProdutoController;
 import model.Cliente;
 import model.Conta;
 import repository.ClienteRepository;
+import repository.ContaRepository;
 import repository.ProdutoRepository;
 
 public class TestePrototipo {
@@ -13,10 +14,11 @@ public class TestePrototipo {
 	public static void main(String[] args) {
 	    	ClienteRepository clienteRepo = new ClienteRepository();
 	        ProdutoRepository produtoRepo = new ProdutoRepository();
+	        ContaRepository contaRepo = new ContaRepository(clienteRepo);
 
 	        ClienteCotroller clienteCtrl = new ClienteCotroller(clienteRepo);
-	        ContaController contaCtrl = new ContaController(clienteRepo);
 	        ProdutoController produtoCtrl = new ProdutoController(produtoRepo);
+	        ContaController contaCtrl = new ContaController(clienteRepo, produtoCtrl, contaRepo);
 
 	        System.out.println("=== INICIANDO TESTE AUTOMATIZADO VCRiquinho ===\n");
 
@@ -30,6 +32,10 @@ public class TestePrototipo {
 	        System.out.println("\n2. Cadastrando Produtos de Investimento...");
 	        produtoCtrl.cadastrarRendaFixa("CDB 60 dias", "CDB com carência", 0.012, 60);
 	        produtoCtrl.cadastrarRendaVariavel("Ações Tech", "Fundo de tecnologia", 0.025); 
+	        produtoCtrl.cadastrarRendaFixa("CDB 15 dias", "CDB com carência", 0.012, 15);
+	        produtoCtrl.cadastrarRendaVariavel("Ações Beleza", "Fundo de cosmetico", 0.050); 
+	        produtoCtrl.cadastrarRendaFixa("CDB 180 dias", "CDB com carência", 0.012, 180);
+	        produtoCtrl.cadastrarRendaVariavel("Ações Comida", "Fundo de fastFood", 0.1); 
 	        produtoCtrl.listarProdutos();
 
 	        // CRIANDO CONTAS ---
@@ -39,9 +45,18 @@ public class TestePrototipo {
 	        contaCtrl.criarConta("12345678901", "CDI-202", 2); // CDI
 	        
 	        contaCtrl.criarConta("12345678000199", "INV-303", 3); // Automatica
+	        contaCtrl.adicionarProduto("12345678000199", "INV-303");
+	        contaCtrl.adicionarProduto("12345678000199", "INV-303");
+	        contaCtrl.adicionarProduto("12345678000199", "INV-303");
+	        contaCtrl.adicionarProduto("12345678000199", "INV-303");
+	        
+	        contaCtrl.listarProdutosConta("12345678000199");
+	        
 	        
 	        Cliente joao = clienteRepo.buscarPorDocumento("12345678901");
 	        Cliente empresa = clienteRepo.buscarPorDocumento("12345678000199");
+	        
+	        
 	        
 	        for(Conta c : joao.getContas()) c.setSaldo(10000.0);
 	        for(Conta c : empresa.getContas()) c.setSaldo(10000.0);

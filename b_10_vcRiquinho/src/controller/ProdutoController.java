@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.Random;
+
 import model.Produto;
 import model.ProdutoRendaFixa;
 import model.ProdutoRendaVariavel;
@@ -8,6 +10,7 @@ import repository.ProdutoRepository;
 public class ProdutoController {
 	
 	private ProdutoRepository repository;
+	Random rand = new Random();
 
     public ProdutoController(ProdutoRepository repository) {
         this.repository = repository;
@@ -25,7 +28,6 @@ public class ProdutoController {
         repository.adicionar(rv);
         System.out.println("Sucesso: Produto Renda Variável cadastrado!");
     }
-
     
     public void listarProdutos() {
         System.out.println("\n--- LISTA DE PRODUTOS DISPONÍVEIS ---");
@@ -35,6 +37,35 @@ public class ProdutoController {
         }
     }
 
+    public Produto escolherRenda() {
+    	int tamanho = repository.listarTodos().size();
+    	if (tamanho > 0) {
+    	    Produto prod = repository.buscarId(rand.nextInt(tamanho));
+    	    return prod;
+    	} else {
+    	    System.out.println("Lista vazia! Não há o que sortear.");
+    	    return null;
+    	}
+    	
+
+    }
+    
+    public Produto escolherRendaManual(int id) {
+    	
+    	Produto prod = repository.buscarId(id);
+    	return prod;
+
+    }
+    
+    public void listarTodosProdutosId() {
+    	int i = 0;
+    	System.out.println("\n--- LISTA DE PRODUTOS DISPONÍVEIS ---");
+        for (Produto p : repository.listarTodos()) {
+            String tipo = (p instanceof ProdutoRendaFixa) ? "Renda Fixa" : "Renda Variável";
+            System.out.println("ID: "+ i++ + " Nome: " + p.getNome() + " | Tipo: " + tipo + " | Desc: " + p.getDescricao());
+        }
+    	
+    }
     
     public void atualizarDescricao(String nome, String novaDesc) {
         Produto p = repository.buscarPorNome(nome);

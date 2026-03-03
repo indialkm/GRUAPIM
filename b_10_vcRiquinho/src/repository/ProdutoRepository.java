@@ -40,6 +40,17 @@ public class ProdutoRepository {
         return false;
     }
 	
+	public Produto buscarId(int id) {
+		
+		if(produtos != null) {
+			return produtos.get(id);
+		}else {
+			return null;
+		}
+		
+		
+	}
+	
 	//ATUALIZAR
 	public boolean atualizar(String nomeOriginal, Produto produtoAtualizado) {
         for (int i = 0; i < produtos.size(); i++) {

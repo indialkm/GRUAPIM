@@ -11,11 +11,11 @@ public class Main {
         
         ClienteRepository clienteRepo = new ClienteRepository();
         ProdutoRepository produtoRepo = new ProdutoRepository();
+        ContaRepository contaRepo = new ContaRepository(clienteRepo);
         
         ClienteCotroller clienteCtrl = new ClienteCotroller(clienteRepo);
-        ContaController contaCtrl = new ContaController(clienteRepo);
         ProdutoController produtoCtrl = new ProdutoController(produtoRepo);
-
+        ContaController contaCtrl = new ContaController(clienteRepo, produtoCtrl, contaRepo);
         int opcaoPrincipal = 0;
 
         while (opcaoPrincipal != 9) {
@@ -82,11 +82,15 @@ public class Main {
                 System.out.print("Número: "); String n = leitor.nextLine();
                 System.out.println("Tipo: 1-Corrente | 2-CDI | 3-Inv. Automático");
                 int t = leitor.nextInt();
+      
                 ctrl.criarConta(d, n, t);
+
             }
             case 2 -> {
                 System.out.print("Doc Cliente: "); String d = leitor.nextLine();
                 ctrl.listarContasDoCliente(d);
+                System.out.println();
+                ctrl.listarProdutosConta(d);
             }
             case 3 -> {
                 System.out.print("Doc Cliente: "); String d = leitor.nextLine();

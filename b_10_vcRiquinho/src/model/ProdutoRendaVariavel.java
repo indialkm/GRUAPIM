@@ -8,6 +8,8 @@ public class ProdutoRendaVariavel extends Produto {
 		super(nome, descricao);
 		this.rendimentoMensalEsperado = rendimentoMensalEsperado;
 	}
+	
+
 
 	public double getRendimentoMensalEsperado() {
 		return rendimentoMensalEsperado;
